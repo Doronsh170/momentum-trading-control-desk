@@ -1,425 +1,242 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Trade Control Desk | דורון</title>
-<style>
-:root{
-  --bg:#07111f;
-  --panel:#0f1d31;
-  --panel2:#12243d;
-  --ink:#eef5ff;
-  --muted:#9fb0c6;
-  --line:#243955;
-  --accent:#6dd3ff;
-  --good:#3ddc97;
-  --warn:#ffd166;
-  --bad:#ff6b6b;
-  --neutral:#b6c2d0;
-  --shadow:0 18px 40px rgba(0,0,0,.22);
-  --radius:18px;
-}
-*{box-sizing:border-box}
-body{margin:0;background:linear-gradient(180deg,#06101d 0%,#0b1525 100%);font-family:Arial,Helvetica,sans-serif;color:var(--ink);}
-header{position:sticky;top:0;z-index:20;background:rgba(7,17,31,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-.header-inner{display:flex;gap:18px;align-items:center;justify-content:space-between;max-width:1500px;margin:0 auto;padding:16px 22px;}
-h1{font-size:24px;line-height:1.2;margin:0;letter-spacing:-.3px}.subtitle{font-size:13px;color:var(--muted);margin-top:5px}.top-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pill{font-size:12px;color:#05111d;background:var(--accent);padding:7px 10px;border-radius:999px;font-weight:700}.pill.dark{background:#1d314e;color:var(--ink);border:1px solid var(--line)}
-main{max-width:1500px;margin:0 auto;padding:18px 22px 40px}.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}.card{background:linear-gradient(180deg,var(--panel) 0%,#0b1728 100%);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:16px}.card h2{font-size:18px;margin:0 0 12px}.card h3{font-size:15px;margin:12px 0 8px;color:#d9e9ff}.small{font-size:12px;color:var(--muted);line-height:1.55}.note{border:1px solid var(--line);background:#0b1a2d;border-radius:14px;padding:11px;color:#c9d9ed;font-size:13px;line-height:1.55}.row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.row2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.row5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.field{display:flex;flex-direction:column;gap:5px}.field label{font-size:12px;color:var(--muted)}input,select,textarea{width:100%;background:#081525;color:var(--ink);border:1px solid var(--line);border-radius:11px;padding:10px;font-size:14px;outline:none}textarea{min-height:88px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(109,211,255,.12)}button{border:0;border-radius:12px;padding:10px 12px;background:#1d314e;color:var(--ink);font-weight:700;cursor:pointer}button.primary{background:var(--accent);color:#06101d}button.good{background:var(--good);color:#03120c}button.warn{background:var(--warn);color:#171100}button.bad{background:var(--bad);color:#1d0505}button.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}button:hover{filter:brightness(1.08)}.btnbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-table{width:100%;border-collapse:separate;border-spacing:0 8px}th{font-size:12px;color:var(--muted);text-align:right;font-weight:700;padding:0 8px}td{background:#0a182a;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px;vertical-align:middle}td:first-child{border-right:1px solid var(--line);border-radius:0 12px 12px 0}td:last-child{border-left:1px solid var(--line);border-radius:12px 0 0 12px}.tbl-input{padding:8px;border-radius:9px;min-width:86px}.ticker{font-weight:800;color:#fff}.tag{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:12px;color:#dcecff;background:#112139}.scorebox{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px;border-radius:16px;background:#0a182a;border:1px solid var(--line)}.score{font-size:34px;font-weight:900}.status{font-weight:900;font-size:18px}.green{color:var(--good)}.yellow{color:var(--warn)}.red{color:var(--bad)}.muted{color:var(--muted)}.checkgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.check{display:flex;gap:8px;align-items:flex-start;background:#0a182a;border:1px solid var(--line);border-radius:12px;padding:10px}.check input{width:auto;margin-top:2px}.check span{font-size:13px;line-height:1.35}.meter{height:12px;border-radius:999px;background:#07111f;border:1px solid var(--line);overflow:hidden}.meter>div{height:100%;width:0%;background:linear-gradient(90deg,var(--bad),var(--warn),var(--good));transition:.2s}.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}.kpi{background:#0a182a;border:1px solid var(--line);border-radius:14px;padding:12px}.kpi .label{font-size:12px;color:var(--muted)}.kpi .value{font-size:22px;font-weight:900;margin-top:5px}.stickybar{position:fixed;left:20px;bottom:18px;z-index:30;display:flex;gap:8px}.footer{color:var(--muted);font-size:12px;text-align:center;margin-top:18px}.section-rule{border-top:1px solid var(--line);margin:14px 0}.hidden{display:none!important}.risk-mode{font-size:16px;font-weight:900}.ltr{direction:ltr;text-align:left}.danger-zone{border-color:rgba(255,107,107,.45)}
-@media(max-width:1100px){.grid,.grid3,.split{grid-template-columns:1fr}.row,.row5{grid-template-columns:1fr 1fr}.header-inner{align-items:flex-start;flex-direction:column}.top-actions{justify-content:flex-start}}
-@media print{body{background:#fff;color:#000}.card,td,.kpi,.note,.scorebox{box-shadow:none;background:#fff;color:#000;border-color:#ccc}header,.stickybar,.btnbar button.bad,.btnbar button.ghost{display:none}input,select,textarea{border:1px solid #aaa;color:#000;background:#fff}main{max-width:none;padding:0}.grid,.grid3,.split{grid-template-columns:1fr}.card{page-break-inside:avoid}.small,.muted,.field label,th{color:#444}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Momentum Pro Step Desk</title>
+  <meta name="description" content="Professional step-by-step momentum trading control desk with Yahoo Finance bridge support." />
+  <style>
+    :root{
+      --bg:#090d14;--panel:#101723;--panel2:#141d2b;--card:#172233;--muted:#94a3b8;--text:#edf3ff;--line:#263548;
+      --accent:#6ee7f9;--accent2:#a78bfa;--good:#3ddc97;--warn:#fbbf24;--bad:#fb7185;--white:#fff;
+      --shadow:0 24px 80px rgba(0,0,0,.35);--radius:22px;--radius2:14px;
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      --sans:Arial,"Noto Sans Hebrew","Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at 20% 0%,rgba(110,231,249,.14),transparent 28%),radial-gradient(circle at 82% 10%,rgba(167,139,250,.16),transparent 30%),var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
+    button,input,select,textarea{font-family:inherit}
+    .app{display:grid;grid-template-columns:320px minmax(0,1fr);min-height:100vh}
+    aside{padding:24px;border-left:1px solid var(--line);background:linear-gradient(180deg,rgba(16,23,35,.96),rgba(9,13,20,.9));position:sticky;top:0;height:100vh;overflow:auto}
+    main{padding:28px;max-width:1180px;width:100%;margin:0 auto}
+    .brand{display:flex;gap:12px;align-items:center;margin-bottom:22px}
+    .logo{width:44px;height:44px;border-radius:15px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 14px 34px rgba(110,231,249,.18);display:flex;align-items:center;justify-content:center;color:#07111b;font-weight:900;letter-spacing:-.5px}
+    h1{font-size:22px;margin:0;line-height:1.15}.sub{color:var(--muted);font-size:13px;margin-top:4px}
+    .status-card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:var(--radius2);padding:14px;margin-bottom:18px}
+    .progress{height:8px;background:#0b111b;border-radius:20px;overflow:hidden;margin-top:10px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.25s}
+    .steps{display:flex;flex-direction:column;gap:9px}.step-btn{width:100%;display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);border-radius:14px;padding:12px;cursor:pointer;text-align:right;transition:.18s}.step-btn:hover{border-color:rgba(110,231,249,.55);background:rgba(110,231,249,.06)}.step-btn.active{border-color:var(--accent);background:rgba(110,231,249,.12)}.step-btn.done{border-color:rgba(61,220,151,.45)}.num{width:28px;height:28px;border-radius:10px;background:#0b111b;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}.done .num{background:rgba(61,220,151,.15);border-color:rgba(61,220,151,.55);color:var(--good)}.step-title{font-weight:800;font-size:14px}.step-meta{color:var(--muted);font-size:12px;margin-top:2px}
+    .topbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:20px}.pill{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.04);font-size:13px;color:var(--muted)}.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+    .hero{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(135deg,rgba(20,29,43,.96),rgba(16,23,35,.86));box-shadow:var(--shadow);padding:24px;margin-bottom:18px}.hero h2{font-size:30px;margin:0 0 8px}.hero p{margin:0;color:var(--muted);line-height:1.65}.section{display:none}.section.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:rgba(20,29,43,.84);border:1px solid var(--line);border-radius:var(--radius2);padding:16px}.card h3{margin:0 0 12px;font-size:18px}.card p{color:var(--muted);line-height:1.55}.col-12{grid-column:span 12}.col-8{grid-column:span 8}.col-6{grid-column:span 6}.col-4{grid-column:span 4}.col-3{grid-column:span 3}.label{display:block;color:#cbd5e1;font-weight:700;font-size:13px;margin:0 0 7px}.input,select,textarea{width:100%;background:#0b111b;border:1px solid var(--line);border-radius:12px;color:var(--text);padding:11px 12px;outline:none}.input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(110,231,249,.08)}textarea{min-height:110px;resize:vertical;line-height:1.45;direction:ltr;text-align:left;font-family:var(--mono);font-size:12px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#0b111b;color:var(--text);border-radius:12px;padding:11px 14px;cursor:pointer;font-weight:800;transition:.16s}.btn:hover{border-color:var(--accent);transform:translateY(-1px)}.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#07111b;border:none}.btn.good{background:rgba(61,220,151,.12);border-color:rgba(61,220,151,.45);color:#d1fae5}.btn.bad{background:rgba(251,113,133,.12);border-color:rgba(251,113,133,.45);color:#ffe4e6}.btn.small{padding:8px 10px;border-radius:10px;font-size:12px}.muted{color:var(--muted)}.kpi{display:flex;flex-direction:column;gap:5px}.kpi .value{font-size:22px;font-weight:900}.kpi .caption{font-size:12px;color:var(--muted)}.gate{border-radius:16px;padding:14px;border:1px solid var(--line);background:#0b111b}.gate.good{border-color:rgba(61,220,151,.5);background:rgba(61,220,151,.08)}.gate.warn{border-color:rgba(251,191,36,.5);background:rgba(251,191,36,.08)}.gate.bad{border-color:rgba(251,113,133,.5);background:rgba(251,113,133,.08)}.gate-title{font-weight:900;font-size:18px}.gate-note{color:var(--muted);font-size:13px;margin-top:4px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}.table{width:100%;border-collapse:collapse;min-width:800px}.table th,.table td{border-bottom:1px solid var(--line);padding:11px;text-align:right;font-size:13px}.table th{color:#cbd5e1;background:rgba(255,255,255,.03);font-weight:900}.table td.mono{font-family:var(--mono);direction:ltr;text-align:left}.tag{display:inline-flex;padding:5px 8px;border-radius:999px;background:rgba(110,231,249,.1);border:1px solid rgba(110,231,249,.25);font-size:12px;color:#cffafe}.tag.warn{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.25);color:#fef3c7}.tag.bad{background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.25);color:#ffe4e6}.tag.good{background:rgba(61,220,151,.1);border-color:rgba(61,220,151,.25);color:#d1fae5}.prompt-box{position:relative}.copy-ok{font-size:12px;color:var(--good);display:none}.copy-ok.show{display:inline}.footer-actions{position:sticky;bottom:0;margin-top:18px;background:linear-gradient(180deg,rgba(9,13,20,0),var(--bg) 20%);padding-top:22px;display:flex;justify-content:space-between;gap:10px;align-items:center}.checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.check{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03)}.check input{margin-top:3px;accent-color:#6ee7f9}.mini{font-size:12px;color:var(--muted);line-height:1.45}.journal-empty{padding:22px;text-align:center;color:var(--muted)}.desktop-link{display:none}
+    @media(max-width:900px){.app{grid-template-columns:1fr}aside{position:static;height:auto;border-left:none;border-bottom:1px solid var(--line)}main{padding:16px}.steps{display:grid;grid-template-columns:repeat(2,1fr)}.step-btn{padding:10px}.hero h2{font-size:24px}.col-8,.col-6,.col-4,.col-3{grid-column:span 12}.checklist{grid-template-columns:1fr}.topbar{align-items:flex-start;flex-direction:column}.footer-actions{position:static;flex-direction:column;align-items:stretch}.btn{width:100%}}
+    @media(max-width:540px){aside{padding:16px}.steps{grid-template-columns:1fr}.hero{padding:18px}.card{padding:14px}.row .btn{width:auto}.mobile-stack{flex-direction:column;align-items:stretch}.mobile-stack .btn{width:100%}}
+  </style>
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <div>
-      <h1>Trade Control Desk</h1>
-      <div class="subtitle">כלי שליטה למסחר מומנטום תנודתי: סינון, כניסה, סטופ, גודל פוזיציה, ניהול ויומן</div>
-    </div>
-    <div class="top-actions">
-      <span class="pill">גרסת מחשב</span>
-      <span class="pill dark" id="datePill"></span>
-      <span class="pill dark">נתונים מוזנים ידנית</span>
-    </div>
-  </div>
-</header>
-<main>
-  <section class="grid">
-    <div class="card">
-      <h2>1. תמונת שוק לפני כניסה</h2>
-      <div class="row5">
-        <div class="field"><label>QQQ מעל VWAP?</label><select id="m_qqq"><option value="0">לא</option><option value="1">כן</option></select></div>
-        <div class="field"><label>SOXX מעל VWAP?</label><select id="m_soxx"><option value="0">לא</option><option value="1">כן</option></select></div>
-        <div class="field"><label>הסקטור של המניה חזק?</label><select id="m_sector"><option value="0">לא</option><option value="1">כן</option></select></div>
-        <div class="field"><label>פתיחה יציבה אחרי 5–15 דקות?</label><select id="m_open"><option value="0">לא</option><option value="1">כן</option></select></div>
-        <div class="field"><label>VIX / פחד לא מתפרץ?</label><select id="m_vix"><option value="0">לא</option><option value="1">כן</option></select></div>
+  <div class="app">
+    <aside>
+      <div class="brand">
+        <div class="logo">MP</div>
+        <div><h1>Momentum Pro Step Desk</h1><div class="sub">כלי שלבים למסחר מומנטום תנודתי</div></div>
       </div>
-      <div class="scorebox" style="margin-top:12px">
-        <div>
-          <div class="small">מצב אגרסיביות מותר</div>
-          <div class="risk-mode" id="marketMode">ממתין להזנה</div>
+      <div class="status-card">
+        <div class="row" style="justify-content:space-between"><span class="muted">התקדמות יומית</span><strong id="progressText">0/8</strong></div>
+        <div class="progress"><div class="bar" id="progressBar"></div></div>
+      </div>
+      <div class="steps" id="stepNav"></div>
+      <div class="status-card" style="margin-top:18px">
+        <div class="mini">עבודה נכונה: כל שלב מאשר החלטה אחת בלבד. לא מתקדמים לכניסה לפני שהשוק, הסקטור והמניה עברו סינון.</div>
+      </div>
+    </aside>
+    <main>
+      <div class="topbar">
+        <div class="pill"><span class="dot"></span><span id="todayLabel"></span></div>
+        <div class="row mobile-stack">
+          <button class="btn small" id="resetDay">איפוס יום</button>
+          <button class="btn small" id="exportState">ייצוא יומן CSV</button>
         </div>
-        <div class="score" id="marketScore">0/5</div>
       </div>
-      <div class="meter" style="margin-top:10px"><div id="marketMeter"></div></div>
-      <div class="note" style="margin-top:12px">כלל עבודה: אם פחות מ־3 מתוך 5 חיוביים, לא נכנסים אגרסיבי. אם 4–5 חיוביים, מותר לחפש טרייד מומנטום, אבל רק לפי טריגר וסטופ מוגדרים.</div>
-    </div>
 
-    <div class="card">
-      <h2>2. צ׳ק־ליסט חובה לפני טרייד</h2>
-      <div class="checkgrid" id="checklist">
-        <label class="check"><input type="checkbox"><span>לא קונה נר ראשון מתוך לחץ</span></label>
-        <label class="check"><input type="checkbox"><span>המניה מעל VWAP או חוזרת אליו ומחזיקה</span></label>
-        <label class="check"><input type="checkbox"><span>יש מחזור חריג ביחס לפתיחה רגילה</span></label>
-        <label class="check"><input type="checkbox"><span>הסקטור תומך, לא רק המניה לבד</span></label>
-        <label class="check"><input type="checkbox"><span>הוגדר סטופ לפני הכניסה</span></label>
-        <label class="check"><input type="checkbox"><span>הוגדרו יעדי רווח חלקיים</span></label>
-        <label class="check"><input type="checkbox"><span>אין יותר מ־2 פוזיציות פתוחות במקביל</span></label>
-        <label class="check"><input type="checkbox"><span>גודל הפוזיציה מתאים למרחק הסטופ</span></label>
+      <section class="section active" data-step="0">
+        <div class="hero"><h2>שלב 1: סריקת 10:00</h2><p>מטרת השלב: לקבל רשימת מועמדות ראשונית, לא לקבל החלטת כניסה. בשעה הזו עדיין אין פרה־מרקט מלא ולכן מחפשים טריגרים, חדשות וסקטורים חמים.</p></div>
+        <div class="grid">
+          <div class="card col-8 prompt-box">
+            <h3>Morning Candidate Scan Prompt</h3>
+            <textarea id="promptMorning" readonly></textarea>
+            <div class="row" style="margin-top:10px"><button class="btn primary" data-copy="promptMorning">Copy prompt</button><span class="copy-ok">Copied</span></div>
+          </div>
+          <div class="card col-4">
+            <h3>תוצאה מהסריקה</h3>
+            <label class="label">סקטורים חמים ראשוניים</label><input class="input" id="morningThemes" placeholder="AI infra, Cyber, Space..." />
+            <label class="label" style="margin-top:12px">מניות מועמדות</label><textarea id="morningCandidates" placeholder="הדבק כאן סימבולים או הערות מהסריקה"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-step="1">
+        <div class="hero"><h2>שלב 2: עדכון פרה־מרקט ראשון</h2><p>כאן מתחילים להבדיל בין מניות עם תנועה אמיתית לבין רעש דליל. המטרה: לצמצם רשימה, לא להיכנס לטרייד.</p></div>
+        <div class="grid">
+          <div class="card col-8 prompt-box"><h3>Early Premarket Update Prompt</h3><textarea id="promptEarly" readonly></textarea><div class="row" style="margin-top:10px"><button class="btn primary" data-copy="promptEarly">Copy prompt</button><span class="copy-ok">Copied</span></div></div>
+          <div class="card col-4"><h3>סינון ראשוני</h3><label class="label">להשאיר ברשימה</label><textarea id="earlyKeep" placeholder="ASTS, RKLB..."></textarea><label class="label" style="margin-top:12px">להסיר מהרשימה</label><textarea id="earlyRemove" placeholder="מניות בלי מחזור / טריגר חלש"></textarea></div>
+        </div>
+      </section>
+
+      <section class="section" data-step="2">
+        <div class="hero"><h2>שלב 3: סריקה סופית 15:45</h2><p>זה השלב שבו נבנית רשימת העבודה לפתיחת המסחר. כאן כבר צריך פרה־מרקט, מחזור, כיוון שוק, סקטור ורמות מפתח.</p></div>
+        <div class="grid">
+          <div class="card col-8 prompt-box"><h3>Final Premarket Scan Prompt</h3><textarea id="promptFinal" readonly></textarea><div class="row" style="margin-top:10px"><button class="btn primary" data-copy="promptFinal">Copy prompt</button><span class="copy-ok">Copied</span></div></div>
+          <div class="card col-4"><h3>Top Watchlist</h3><label class="label">Top 5 למסחר אגרסיבי</label><textarea id="finalTop" placeholder="הדבק כאן את ה־Top 5"></textarea><label class="label" style="margin-top:12px">מניה ראשית למעקב בפתיחה</label><input class="input" id="primaryTicker" placeholder="לדוגמה: RKLB" /></div>
+        </div>
+      </section>
+
+      <section class="section" data-step="3">
+        <div class="hero"><h2>שלב 4: Market Gate</h2><p>לפני בחירת מניה, בודקים אם השוק בכלל מאפשר אגרסיביות. אם ה־Gate אדום, לא מכריחים טרייד.</p></div>
+        <div class="grid">
+          <div class="card col-3"><label class="label">QQQ</label><select id="qqqState"><option value="0">לא ברור</option><option value="1">ירוק ומעל VWAP</option><option value="-1">אדום או מתחת VWAP</option></select></div>
+          <div class="card col-3"><label class="label">SOXX / SMH</label><select id="soxxState"><option value="0">לא ברור</option><option value="1">חזק</option><option value="-1">חלש</option></select></div>
+          <div class="card col-3"><label class="label">סקטור המניה</label><select id="sectorState"><option value="0">לא ברור</option><option value="1">מוביל</option><option value="-1">מפגר</option></select></div>
+          <div class="card col-3"><label class="label">VIX / תנודתיות</label><select id="vixState"><option value="0">רגיל</option><option value="1">תומך Risk-On</option><option value="-1">מתחיל ללחוץ</option></select></div>
+          <div class="card col-12"><div id="gateResult" class="gate"><div class="gate-title">Gate: ניטרלי</div><div class="gate-note">מלא את ארבעת השדות כדי לקבל החלטת אגרסיביות.</div></div></div>
+        </div>
+      </section>
+
+      <section class="section" data-step="4">
+        <div class="hero"><h2>שלב 5: בחירת מניה ותבנית</h2><p>מותר לבחור מניה רק אחרי שה־Market Gate לא אדום. כאן מגדירים למה נכנסים: Breakout, Pullback ל־VWAP או Short Squeeze.</p></div>
+        <div class="grid">
+          <div class="card col-4"><label class="label">Ticker</label><input class="input" id="setupTicker" placeholder="ASTS" /><label class="label" style="margin-top:12px">תבנית</label><select id="setupType"><option>Breakout</option><option>Pullback to VWAP</option><option>Higher Low</option><option>Short Squeeze</option></select></div>
+          <div class="card col-4"><label class="label">טריגר</label><select id="setupTrigger"><option>סקטור חזק</option><option>חדשות חברה</option><option>דוח / Guidance</option><option>שדרוג אנליסט</option><option>שורט גבוה</option><option>תמה חמה</option></select><label class="label" style="margin-top:12px">סיכון</label><select id="setupRisk"><option>בינוני</option><option>גבוה</option><option>קיצוני</option></select></div>
+          <div class="card col-4"><label class="label">הערת החלטה</label><textarea id="setupNote" placeholder="למה דווקא המניה הזו ולא אחרות?"></textarea></div>
+          <div class="card col-12">
+            <div class="checklist">
+              <label class="check"><input type="checkbox" class="setupCheck"/><span>המניה מעל VWAP או חוזרת אליו ומחזיקה</span></label>
+              <label class="check"><input type="checkbox" class="setupCheck"/><span>יש מחזור חריג ביחס לפתיחה רגילה</span></label>
+              <label class="check"><input type="checkbox" class="setupCheck"/><span>הסקטור שלה תומך במהלך</span></label>
+              <label class="check"><input type="checkbox" class="setupCheck"/><span>רמת הסטופ ברורה לפני הכניסה</span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-step="5">
+        <div class="hero"><h2>שלב 6: תכנית טרייד ומחשבון סיכון</h2><p>אין כניסה בלי גודל פוזיציה, סטופ ויעדים. המחשבון מחשב סיכון לפי ההון שהגדרת למסחר אקטיבי.</p></div>
+        <div class="grid">
+          <div class="card col-3"><label class="label">הון למסחר אקטיבי</label><input class="input" id="capital" type="number" value="100000" /></div>
+          <div class="card col-3"><label class="label">סיכון לטרייד %</label><input class="input" id="riskPct" type="number" step="0.1" value="0.75" /></div>
+          <div class="card col-3"><label class="label">מחיר כניסה</label><input class="input" id="entry" type="number" step="0.01" /></div>
+          <div class="card col-3"><label class="label">סטופ</label><input class="input" id="stop" type="number" step="0.01" /></div>
+          <div class="card col-3 kpi"><div class="caption">סיכון כספי</div><div class="value" id="riskMoney">₪0</div></div>
+          <div class="card col-3 kpi"><div class="caption">כמות מקסימלית</div><div class="value" id="sharesOut">0</div></div>
+          <div class="card col-3 kpi"><div class="caption">שווי פוזיציה</div><div class="value" id="posValue">$0</div></div>
+          <div class="card col-3 kpi"><div class="caption">מרחק סטופ</div><div class="value" id="stopDist">0%</div></div>
+          <div class="card col-4"><label class="label">יעד 1</label><input class="input" id="target1" type="number" step="0.01" /></div>
+          <div class="card col-4"><label class="label">יעד 2</label><input class="input" id="target2" type="number" step="0.01" /></div>
+          <div class="card col-4"><label class="label">יעד 3</label><input class="input" id="target3" type="number" step="0.01" /></div>
+        </div>
+      </section>
+
+      <section class="section" data-step="6">
+        <div class="hero"><h2>שלב 7: ניהול פוזיציה בזמן אמת</h2><p>כאן המטרה היא למנוע מהלך ירוק שהופך לאדום. מעדכנים מחיר נוכחי, רואים R, ומחליטים אם להחזיק, להוריד חלק או לצאת.</p></div>
+        <div class="grid">
+          <div class="card col-4"><label class="label">מחיר נוכחי</label><input class="input" id="currentPrice" type="number" step="0.01" /></div>
+          <div class="card col-4"><label class="label">מצב מול VWAP</label><select id="liveVwap"><option>מעל VWAP</option><option>על VWAP</option><option>מתחת VWAP</option></select></div>
+          <div class="card col-4"><label class="label">מבנה מחיר</label><select id="priceStructure"><option>שיאים עולים</option><option>מדשדש</option><option>שיאים יורדים</option></select></div>
+          <div class="card col-4 kpi"><div class="caption">R נוכחי</div><div class="value" id="rNow">0.00R</div></div>
+          <div class="card col-4 kpi"><div class="caption">P/L תיאורטי</div><div class="value" id="plNow">$0</div></div>
+          <div class="card col-4"><div id="liveDecision" class="gate"><div class="gate-title">Decision: המתן</div><div class="gate-note">עדכן מחיר ומבנה מחיר.</div></div></div>
+        </div>
+      </section>
+
+      <section class="section" data-step="7">
+        <div class="hero"><h2>שלב 8: יומן וסיכום</h2><p>היומן שומר את העסקאות בדפדפן. בסוף יום בודקים אם פעלת לפי השלבים, לא רק אם הרווחת.</p></div>
+        <div class="grid">
+          <div class="card col-4"><label class="label">תוצאה</label><select id="journalResult"><option>Win</option><option>Loss</option><option>Break-even</option><option>No trade</option></select></div>
+          <div class="card col-4"><label class="label">יציאה</label><input class="input" id="exitPrice" type="number" step="0.01" /></div>
+          <div class="card col-4"><label class="label">משמעת</label><select id="discipline"><option>פעלתי לפי התכנית</option><option>רדפתי אחרי מחיר</option><option>הזזתי סטופ</option><option>יצאתי מוקדם מדי</option><option>לא נכנסתי, וטוב שכך</option></select></div>
+          <div class="card col-12"><label class="label">סיכום קצר</label><textarea id="journalNote" placeholder="מה עבד, מה לא, ומה הכלל למחר"></textarea><div class="row" style="margin-top:10px"><button class="btn primary" id="saveJournal">שמור ביומן</button><button class="btn" id="clearJournal">נקה יומן</button></div></div>
+          <div class="card col-12"><h3>יומן</h3><div id="journalList" class="table-wrap"></div></div>
+        </div>
+      </section>
+
+      <section class="section" data-step="8">
+        <div class="hero"><h2>גשר נתונים ל־Yahoo Finance</h2><p>GitHub Pages לא מריץ backend. כדי למשוך נתונים מ־Yahoo בצורה יציבה יחסית צריך Worker חיצוני, למשל Cloudflare Worker. מדביקים את כתובת ה־Worker כאן ומרעננים ציטוטים.</p></div>
+        <div class="grid">
+          <div class="card col-6"><label class="label">Yahoo Bridge URL</label><input class="input" id="bridgeUrl" placeholder="https://your-worker.workers.dev" /><label class="label" style="margin-top:12px">Symbols</label><input class="input" id="quoteSymbols" value="QQQ,SOXX,SMH,CIBR,IGV,ASTS,RKLB,PANW,WDC,NBIS,IONQ,WEN" /><div class="row" style="margin-top:10px"><button class="btn primary" id="refreshQuotes">Refresh quotes</button><span class="muted" id="quoteStatus"></span></div></div>
+          <div class="card col-6"><h3>Quotes</h3><div id="quotesBox" class="table-wrap"><div class="journal-empty">עדיין אין נתונים. הגדר Worker ולחץ Refresh.</div></div></div>
+        </div>
+      </section>
+
+      <div class="footer-actions">
+        <button class="btn" id="prevStep">שלב קודם</button>
+        <button class="btn primary" id="completeStep">Complete step and continue</button>
       </div>
-      <div class="scorebox" style="margin-top:12px">
-        <div class="status" id="checkStatus">טרם אושר</div>
-        <div class="score" id="checkScore">0/8</div>
-      </div>
-    </div>
-  </section>
+    </main>
+  </div>
 
-  <section class="card">
-    <h2>3. Watchlist למחר, עריכה חופשית</h2>
-    <div class="small">המחירים והרמות הם נקודת פתיחה בלבד לפי העבודה שהגדרנו. בזמן אמת מעדכנים ידנית לפי פרה־מרקט, VWAP, והגבוה/נמוך של הפתיחה.</div>
-    <div style="overflow:auto">
-      <table id="watchTable">
-        <thead><tr><th>סימול</th><th>תמה</th><th>טריגר כניסה</th><th>תמיכה</th><th>שבירה שלילית</th><th>מחיר נוכחי</th><th>VWAP</th><th>מחזור חריג?</th><th>ציון</th><th>פעולה</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div class="btnbar">
-      <button class="primary" onclick="addWatchRow()">הוסף שורה</button>
-      <button onclick="saveWatchlist()">שמור Watchlist</button>
-      <button class="ghost" onclick="loadDefaults()">טען ברירת מחדל</button>
-      <button class="bad" onclick="clearWatchlist()">נקה</button>
-    </div>
-  </section>
-
-  <section class="grid">
-    <div class="card">
-      <h2>4. מחשבון גודל פוזיציה</h2>
-      <div class="row">
-        <div class="field"><label>הון למסחר אקטיבי</label><input id="cap" type="number" value="100000"></div>
-        <div class="field"><label>סיכון לטרייד באחוזים</label><input id="riskPct" type="number" step="0.1" value="1"></div>
-        <div class="field"><label>מחיר כניסה</label><input id="entry" type="number" step="0.01" value="100"></div>
-        <div class="field"><label>מחיר סטופ</label><input id="stop" type="number" step="0.01" value="97"></div>
-      </div>
-      <div class="grid3" style="margin-top:12px">
-        <div class="kpi"><div class="label">סיכון כספי מקסימלי</div><div class="value" id="riskMoney">₪1,000</div></div>
-        <div class="kpi"><div class="label">כמות מניות מותרת</div><div class="value" id="qty">333</div></div>
-        <div class="kpi"><div class="label">שווי פוזיציה משוער</div><div class="value" id="posValue">₪33,333</div></div>
-      </div>
-      <div class="note" style="margin-top:12px">החישוב מניח שהמטבע זהה להון שהזנת. אם אתה עובד בדולרים, הזן הון בדולרים. אם אתה עובד בשקלים, המר ידנית או השתמש בשמרנות.</div>
-    </div>
-
-    <div class="card">
-      <h2>5. בניית טרייד פעיל</h2>
-      <div class="row2">
-        <div class="field"><label>סימול</label><input id="p_ticker" value="RKLB"></div>
-        <div class="field"><label>סוג כניסה</label><select id="p_type"><option>Breakout</option><option>Pullback ל־VWAP</option><option>Higher Low</option><option>Scalp מהיר</option></select></div>
-      </div>
-      <div class="row5" style="margin-top:10px">
-        <div class="field"><label>כניסה</label><input id="p_entry" type="number" step="0.01"></div>
-        <div class="field"><label>סטופ</label><input id="p_stop" type="number" step="0.01"></div>
-        <div class="field"><label>יעד 1</label><input id="p_t1" type="number" step="0.01"></div>
-        <div class="field"><label>יעד 2</label><input id="p_t2" type="number" step="0.01"></div>
-        <div class="field"><label>יעד 3</label><input id="p_t3" type="number" step="0.01"></div>
-      </div>
-      <div class="field" style="margin-top:10px"><label>תנאי כניסה במילים</label><textarea id="p_notes">נכנס רק אם המניה מעל VWAP, מחזיקה פריצה עם מחזור, והסקטור תומך.</textarea></div>
-      <div class="btnbar"><button class="primary" onclick="addPlan()">הוסף לתכנית</button><button onclick="savePlans()">שמור תכנית</button><button class="ghost" onclick="clearPlanForm()">נקה טופס</button></div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>6. תכנית טריידים פעילה</h2>
-    <div style="overflow:auto">
-      <table id="planTable">
-        <thead><tr><th>סימול</th><th>סוג</th><th>כניסה</th><th>סטופ</th><th>יעד 1</th><th>יעד 2</th><th>יעד 3</th><th>סטטוס</th><th>הערות</th><th>פעולה</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="grid">
-    <div class="card">
-      <h2>7. ניהול פוזיציה בזמן אמת</h2>
-      <div class="row">
-        <div class="field"><label>כניסה ממוצעת</label><input id="liveEntry" type="number" step="0.01" value="100"></div>
-        <div class="field"><label>סטופ נוכחי</label><input id="liveStop" type="number" step="0.01" value="97"></div>
-        <div class="field"><label>מחיר נוכחי</label><input id="livePrice" type="number" step="0.01" value="103"></div>
-        <div class="field"><label>כמות</label><input id="liveQty" type="number" value="100"></div>
-      </div>
-      <div class="grid3" style="margin-top:12px">
-        <div class="kpi"><div class="label">רווח/הפסד</div><div class="value" id="livePnL">300</div></div>
-        <div class="kpi"><div class="label">R נוכחי</div><div class="value" id="liveR">1.00R</div></div>
-        <div class="kpi"><div class="label">החלטה</div><div class="value" id="liveDecision">להחזיק</div></div>
-      </div>
-      <div class="note" style="margin-top:12px">כלל ניהול: אחרי רווח ראשון, לא נותנים לטרייד ירוק להפוך לאדום. אם המחיר מאבד VWAP או שובר Higher Low, מקטינים או יוצאים.</div>
-    </div>
-
-    <div class="card danger-zone">
-      <h2>8. כללי חסימה מיידית</h2>
-      <div class="note">לא נכנסים אם אחד מהבאים מתקיים: QQQ נשבר מתחת VWAP, המניה בגאפ פראי ונכשלת, המחזור גבוה אבל הנרות אדומים, אין סטופ מוגדר, או שאתה כבר ביותר מדי פוזיציות תנודתיות.</div>
-      <div class="section-rule"></div>
-      <h3>פקודות פעולה קצרות</h3>
-      <div class="btnbar">
-        <button class="good" onclick="quickDecision('מותר לחפש כניסה רק לפי הטריגר')">שוק מאשר</button>
-        <button class="warn" onclick="quickDecision('להקטין גודל, להמתין ל־Pullback')">שוק לא נקי</button>
-        <button class="bad" onclick="quickDecision('אין כניסה. להמתין')">חסימת טרייד</button>
-      </div>
-      <div class="kpi" style="margin-top:12px"><div class="label">החלטת מסחר נוכחית</div><div class="value" id="quickBox">טרם נקבע</div></div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>9. יומן טריידים</h2>
-    <div class="row5">
-      <div class="field"><label>תאריך</label><input id="j_date" type="date"></div>
-      <div class="field"><label>סימול</label><input id="j_ticker"></div>
-      <div class="field"><label>תוצאה כספית</label><input id="j_pnl" type="number" step="0.01"></div>
-      <div class="field"><label>R</label><input id="j_r" type="number" step="0.01"></div>
-      <div class="field"><label>עמדתי בתכנית?</label><select id="j_follow"><option>כן</option><option>לא</option><option>חלקית</option></select></div>
-    </div>
-    <div class="field" style="margin-top:10px"><label>לקח מרכזי</label><textarea id="j_note"></textarea></div>
-    <div class="btnbar"><button class="primary" onclick="addJournal()">הוסף ליומן</button><button onclick="exportCSV()">יצוא CSV</button><button class="ghost" onclick="print()">הדפס / שמור PDF</button><button class="bad" onclick="clearJournal()">נקה יומן</button></div>
-    <div style="overflow:auto;margin-top:10px">
-      <table id="journalTable"><thead><tr><th>תאריך</th><th>סימול</th><th>תוצאה</th><th>R</th><th>משמעת</th><th>לקח</th><th>פעולה</th></tr></thead><tbody></tbody></table>
-    </div>
-  </section>
-
-
-  <section class="card" id="promptDesk">
-    <h2>10. פרומפטים קבועים באנגלית לסריקת מניות טרנדיות</h2>
-    <div class="small">העתק את הפרומפט המתאים לפי השעה. הפרומפטים בנויים כך שאבדוק בזמן אמת, אפריד בין עובדות להערכה, ואחזיר לך רשימת מניות מומנטום תנודתיות עם רמות פעולה.</div>
-    <div class="grid3" style="margin-top:12px">
-      <div class="card" style="margin-bottom:0">
-        <h3>10:00 Morning Candidate Scan</h3>
-        <textarea id="prompt_1" class="ltr" readonly style="min-height:360px;white-space:pre-wrap">Act as a professional Wall Street momentum scanner and premarket preparation analyst.
-
-Current context: It is around 10:00 Israel time, before meaningful US premarket activity has developed. Do not build a final trading watchlist yet. The goal is to prepare an initial candidate list for the coming US trading session.
-
-My trading objective: I am looking for highly volatile momentum candidates for active day trading and short term momentum trading. I am not looking for calm long term investment ideas.
-
-Use up to date web research before answering. Do not rely on memory. Do not invent market data. If a data point is unavailable, say clearly that it was not found.
-
-Scan for:
-1. Important overnight news on US listed stocks.
-2. Stocks that moved sharply in yesterday&#x27;s after hours session.
-3. Earnings, guidance raises, guidance cuts, analyst upgrades, analyst downgrades, M&amp;A, contracts, regulatory events, FDA events, financing events, and unusual company specific catalysts.
-4. Stocks connected to hot themes: AI, semiconductors, memory and AI storage, cybersecurity, quantum, space, nuclear and power, data centers, crypto, fintech, defense, drones, robotics, and potential short squeezes.
-5. Sectors that may become hot during the session.
-6. Stocks that must be checked again once US premarket liquidity improves.
-
-For each candidate, provide:
-- Ticker and company name.
-- Sector or trading theme.
-- The catalyst.
-- Catalyst strength: strong, medium, or weak.
-- Why it may fit volatile momentum trading.
-- What must be checked again in premarket.
-- Initial momentum score from 1 to 10.
-
-Separate clearly between:
-- Candidate for monitoring.
-- Candidate for actual trading.
-
-Important output rules:
-- Answer in Hebrew.
-- Be focused and professional.
-- Separate facts, live data, and your assessment.
-- Include citations for the sources used.
-- Do not call something a trade candidate if premarket data is still too thin.
-</textarea>
-        <div class="btnbar"><button class="primary" onclick="copyPrompt('prompt_1')">Copy prompt</button></div>
-      </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>11:15 Early Premarket Update</h3>
-        <textarea id="prompt_2" class="ltr" readonly style="min-height:360px;white-space:pre-wrap">Update the morning candidate list using early US premarket data.
-
-My trading objective: Find highly volatile momentum stocks for active day trading today. I do not want long term investment ideas.
-
-Use up to date web research and live market data where available. Do not rely on memory. Do not invent data. If premarket volume or another data point is unavailable, say so clearly.
-
-Review the morning candidates and check:
-1. Which stocks are actually moving in premarket.
-2. Which stocks have real premarket volume, not just thin prints.
-3. Which sectors are receiving money.
-4. Which catalysts are still relevant after the first premarket reaction.
-5. Which stocks are fading despite a catalyst.
-6. Whether QQQ, SPY, IWM, SOXX or SMH, IGV, CIBR, and VIX support risk on or risk off behavior.
-
-Divide the list into three groups:
-1. Strong candidates for today&#x27;s trading session.
-2. Monitor only.
-3. Remove from the list.
-
-For each relevant stock, provide:
-- Ticker and company name.
-- Premarket change if available.
-- Premarket volume if available.
-- Catalyst.
-- Sector or theme.
-- Key levels: bullish above, risky below.
-- Preferred setup: breakout, VWAP pullback, higher low, or short squeeze.
-- Risk level: low, medium, high, or extreme.
-- Updated momentum score from 1 to 10.
-
-Important output rules:
-- Answer in Hebrew.
-- Be direct and data driven.
-- Separate facts, live data, and your assessment.
-- Include citations for the sources used.
-- Do not upgrade a stock to trade candidate status unless the premarket evidence supports it.
-</textarea>
-        <div class="btnbar"><button class="primary" onclick="copyPrompt('prompt_2')">Copy prompt</button></div>
-      </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>15:45 Final Premarket Scan</h3>
-        <textarea id="prompt_3" class="ltr" readonly style="min-height:360px;white-space:pre-wrap">Run a final professional US premarket scan for today&#x27;s opening session.
-
-My trading objective: I want highly volatile momentum stocks for active day trading and momentum trading today. I am not looking for calm long term investment ideas.
-
-Use up to date web research and live market data before answering. Do not rely on memory. Do not invent numbers. If a data point is unavailable, say clearly that it was not found.
-
-Check the current market backdrop:
-- QQQ.
-- SPY.
-- IWM.
-- SOXX or SMH.
-- IGV.
-- CIBR.
-- VIX.
-- Futures if available.
-- Whether the market is risk on, neutral, or risk off.
-
-Scan for stocks with:
-- Sharp premarket move.
-- Unusual premarket volume.
-- Fresh company news.
-- Earnings or guidance catalyst.
-- Analyst upgrade or downgrade.
-- Sector momentum.
-- Short squeeze potential.
-- Low float if relevant.
-- Unusual options activity if available.
-- Technical setup near breakout or breakdown levels.
-
-Prioritize themes:
-AI, semiconductors, memory and AI storage, cybersecurity, AI infrastructure, data centers, power and nuclear, quantum, space, drones and defense, crypto and Bitcoin miners, fintech, software, robotics, and short squeeze names.
-
-For each stock, provide:
-- Ticker and company name.
-- Theme or sector.
-- Today&#x27;s catalyst.
-- Premarket change and premarket volume if available.
-- Key levels: bullish above, dangerous below.
-- Preferred setup: breakout, VWAP pullback, higher low, or short squeeze.
-- Risk level: low, medium, high, or extreme.
-- Momentum score from 1 to 10.
-
-Finish with:
-1. Top 10 stocks for today&#x27;s watchlist.
-2. Top 5 for aggressive trading.
-3. Top 3 cleanest setups by sector plus catalyst.
-4. Top 3 highest risk but highest volatility candidates.
-5. Stocks attracting attention that I should not chase.
-6. Opening plan for the first 15 minutes.
-7. Conditions for entry.
-8. Conditions for no trade.
-9. Stop management rules.
-10. Profit taking rules.
-11. The signal that the day is turning risk off and I should reduce aggressiveness.
-
-Important output rules:
-- Answer in Hebrew.
-- Be concise but professional.
-- Separate facts, live data, and your assessment.
-- Include citations for the sources used.
-- I am looking for volatile momentum day trading candidates, not long term investment recommendations.
-</textarea>
-        <div class="btnbar"><button class="primary" onclick="copyPrompt('prompt_3')">Copy prompt</button></div>
-      </div>
-    </div>
-    <div class="note" style="margin-top:12px">שימוש נכון: ב־10:00 מקבלים מועמדים בלבד, ב־11:15 מסננים לפי פרה־מרקט ראשוני, וב־15:45 מקבלים רשימת עבודה לפתיחה.</div>
-  </section>
-
-  <div class="footer">פותח עבור דורון שרייבמן. הכלי אינו ייעוץ השקעות ואינו מחליף שיקול דעת, ניהול סיכונים ובדיקת נתוני זמן אמת.</div>
-</main>
-<div class="stickybar"><button class="primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">למעלה</button><button onclick="saveAll()">שמור הכל</button></div>
-<script>
-const DKEY='tcd_desktop_v1';
-const defaultWatch=[
- {t:'ASTS',theme:'חלל / תקשורת לוויינית',trig:87.30,sup:'85.0',fail:'84.5',price:'',vwap:'',vol:'כן'},
- {t:'RKLB',theme:'חלל / Rocket Lab',trig:100.00,sup:'96.5–97.5',fail:'95.5',price:'',vwap:'',vol:'כן'},
- {t:'PANW',theme:'סייבר',trig:333.00,sup:'325–327',fail:'322',price:'',vwap:'',vol:'כן'},
- {t:'WDC',theme:'זיכרון / אחסון AI',trig:656.00,sup:'640–645',fail:'635',price:'',vwap:'',vol:'כן'},
- {t:'NBIS',theme:'AI Infrastructure',trig:264.00,sup:'255–258',fail:'250',price:'',vwap:'',vol:'כן'},
- {t:'IONQ',theme:'קוונטום',trig:54.20,sup:'52',fail:'51',price:'',vwap:'',vol:'כן'},
- {t:'WEN',theme:'שורט־סקוויז',trig:8.30,sup:'8.00',fail:'7.85',price:'',vwap:'',vol:'כן'}
-];
-let watch=[],plans=[],journal=[];
-function fmt(n){return isFinite(n)?Number(n).toLocaleString('he-IL',{maximumFractionDigits:2}):''}
-function today(){return new Date().toISOString().slice(0,10)}
-function setDate(){document.getElementById('datePill').textContent=new Date().toLocaleDateString('he-IL',{weekday:'long',year:'numeric',month:'long',day:'numeric'});document.getElementById('j_date').value=today()}
-function watchScore(r){let s=0;let p=parseFloat(r.price), trig=parseFloat(r.trig), v=parseFloat(r.vwap); if(!isNaN(p)&&!isNaN(trig)&&p>=trig)s+=3; if(!isNaN(p)&&!isNaN(v)&&p>=v)s+=3; if(r.vol==='כן')s+=2; if(r.theme)s+=1; return Math.min(10,s)}
-function renderWatch(){const tb=document.querySelector('#watchTable tbody');tb.innerHTML='';watch.forEach((r,i)=>{const s=watchScore(r);const cls=s>=8?'green':s>=5?'yellow':'red';tb.insertAdjacentHTML('beforeend',`<tr><td><input class="tbl-input ticker ltr" value="${r.t||''}" onchange="watch[${i}].t=this.value"></td><td><input class="tbl-input" value="${r.theme||''}" onchange="watch[${i}].theme=this.value"></td><td><input class="tbl-input" type="number" step="0.01" value="${r.trig||''}" onchange="watch[${i}].trig=this.value;renderWatch()"></td><td><input class="tbl-input" value="${r.sup||''}" onchange="watch[${i}].sup=this.value"></td><td><input class="tbl-input" value="${r.fail||''}" onchange="watch[${i}].fail=this.value"></td><td><input class="tbl-input" type="number" step="0.01" value="${r.price||''}" onchange="watch[${i}].price=this.value;renderWatch()"></td><td><input class="tbl-input" type="number" step="0.01" value="${r.vwap||''}" onchange="watch[${i}].vwap=this.value;renderWatch()"></td><td><select class="tbl-input" onchange="watch[${i}].vol=this.value;renderWatch()"><option ${r.vol==='לא'?'selected':''}>לא</option><option ${r.vol==='כן'?'selected':''}>כן</option></select></td><td><span class="score ${cls}" style="font-size:20px">${s}/10</span></td><td><button class="bad" onclick="watch.splice(${i},1);renderWatch()">מחק</button></td></tr>`)});}
-function addWatchRow(){watch.push({t:'',theme:'',trig:'',sup:'',fail:'',price:'',vwap:'',vol:'לא'});renderWatch()}
-function saveWatchlist(){localStorage.setItem(DKEY+'_watch',JSON.stringify(watch));toast('Watchlist נשמר')}
-function clearWatchlist(){if(confirm('לנקות Watchlist?')){watch=[];renderWatch();saveWatchlist()}}
-function loadDefaults(){watch=JSON.parse(JSON.stringify(defaultWatch));renderWatch();saveWatchlist()}
-function calcMarket(){let ids=['m_qqq','m_soxx','m_sector','m_open','m_vix'];let s=ids.reduce((a,id)=>a+Number(document.getElementById(id).value),0);document.getElementById('marketScore').textContent=s+'/5';document.getElementById('marketMeter').style.width=(s/5*100)+'%';let mode=s>=4?'אגרסיבי מבוקר: מותר לחפש מומנטום':s===3?'רגיל: רק כניסה איכותית וגודל מופחת':'הגנתי: להמתין או לעבוד קטן מאוד';let cls=s>=4?'green':s===3?'yellow':'red';let el=document.getElementById('marketMode');el.textContent=mode;el.className='risk-mode '+cls;saveMarket()}
-function saveMarket(){let obj={};['m_qqq','m_soxx','m_sector','m_open','m_vix'].forEach(id=>obj[id]=document.getElementById(id).value);localStorage.setItem(DKEY+'_market',JSON.stringify(obj))}
-function loadMarket(){let obj=JSON.parse(localStorage.getItem(DKEY+'_market')||'{}');Object.keys(obj).forEach(id=>{if(document.getElementById(id))document.getElementById(id).value=obj[id]});calcMarket()}
-function calcChecklist(){let boxes=[...document.querySelectorAll('#checklist input')];let s=boxes.filter(b=>b.checked).length;document.getElementById('checkScore').textContent=s+'/8';let st=document.getElementById('checkStatus');st.textContent=s>=7?'מאושר למסחר לפי נוהל':s>=5?'חסר אישור מלא':'לא מאושר';st.className='status '+(s>=7?'green':s>=5?'yellow':'red');localStorage.setItem(DKEY+'_checks',JSON.stringify(boxes.map(b=>b.checked)))}
-function loadChecks(){let arr=JSON.parse(localStorage.getItem(DKEY+'_checks')||'[]');[...document.querySelectorAll('#checklist input')].forEach((b,i)=>b.checked=!!arr[i]);calcChecklist()}
-function calcSize(){let cap=+document.getElementById('cap').value, rp=+document.getElementById('riskPct').value, e=+document.getElementById('entry').value, st=+document.getElementById('stop').value;let rm=cap*rp/100, per=Math.abs(e-st), qty=per>0?Math.floor(rm/per):0, pv=qty*e;document.getElementById('riskMoney').textContent=fmt(rm);document.getElementById('qty').textContent=fmt(qty);document.getElementById('posValue').textContent=fmt(pv);saveCalc()}
-function saveCalc(){let obj={};['cap','riskPct','entry','stop'].forEach(id=>obj[id]=document.getElementById(id).value);localStorage.setItem(DKEY+'_calc',JSON.stringify(obj))}
-function loadCalc(){let obj=JSON.parse(localStorage.getItem(DKEY+'_calc')||'{}');Object.keys(obj).forEach(id=>{if(document.getElementById(id))document.getElementById(id).value=obj[id]});calcSize()}
-function addPlan(){plans.push({t:v('p_ticker'),type:v('p_type'),entry:v('p_entry'),stop:v('p_stop'),t1:v('p_t1'),t2:v('p_t2'),t3:v('p_t3'),status:'ממתין',notes:v('p_notes')});renderPlans();savePlans()}
-function renderPlans(){let tb=document.querySelector('#planTable tbody');tb.innerHTML='';plans.forEach((p,i)=>{tb.insertAdjacentHTML('beforeend',`<tr><td class="ticker ltr">${p.t}</td><td>${p.type}</td><td>${p.entry}</td><td>${p.stop}</td><td>${p.t1}</td><td>${p.t2}</td><td>${p.t3}</td><td><select class="tbl-input" onchange="plans[${i}].status=this.value;savePlans()"><option ${p.status==='ממתין'?'selected':''}>ממתין</option><option ${p.status==='פעיל'?'selected':''}>פעיל</option><option ${p.status==='בוצע חלקית'?'selected':''}>בוצע חלקית</option><option ${p.status==='נסגר'?'selected':''}>נסגר</option><option ${p.status==='בוטל'?'selected':''}>בוטל</option></select></td><td>${p.notes}</td><td><button class="bad" onclick="plans.splice(${i},1);renderPlans();savePlans()">מחק</button></td></tr>`)});}
-function savePlans(){localStorage.setItem(DKEY+'_plans',JSON.stringify(plans));toast('תכנית נשמרה')}
-function loadPlans(){plans=JSON.parse(localStorage.getItem(DKEY+'_plans')||'[]');renderPlans()}
-function clearPlanForm(){['p_ticker','p_entry','p_stop','p_t1','p_t2','p_t3','p_notes'].forEach(id=>document.getElementById(id).value='')}
-function calcLive(){let e=+v('liveEntry'), st=+v('liveStop'), p=+v('livePrice'), q=+v('liveQty');let pnl=(p-e)*q;let r=(Math.abs(e-st)>0)?(p-e)/Math.abs(e-st):0;gid('livePnL').textContent=fmt(pnl);gid('liveR').textContent=(isFinite(r)?r.toFixed(2):'0.00')+'R';let dec=r>=2?'לקחת עוד חלק, להשאיר זנב רק מעל VWAP':r>=1?'להגן על רווח, סטופ לאזור כניסה':r>0?'להחזיק בזהירות':r<=-1?'סטופ נפגע, לצאת':'ממתין';gid('liveDecision').textContent=dec;gid('liveDecision').className='value '+(r>=1?'green':r>0?'yellow':'red');saveLive()}
-function saveLive(){let obj={};['liveEntry','liveStop','livePrice','liveQty'].forEach(id=>obj[id]=gid(id).value);localStorage.setItem(DKEY+'_live',JSON.stringify(obj))}
-function loadLive(){let obj=JSON.parse(localStorage.getItem(DKEY+'_live')||'{}');Object.keys(obj).forEach(id=>{if(gid(id))gid(id).value=obj[id]});calcLive()}
-function quickDecision(t){gid('quickBox').textContent=t;localStorage.setItem(DKEY+'_quick',t)}
-function addJournal(){journal.push({d:v('j_date'),t:v('j_ticker'),pnl:v('j_pnl'),r:v('j_r'),f:v('j_follow'),n:v('j_note')});renderJournal();saveJournal();['j_ticker','j_pnl','j_r','j_note'].forEach(id=>gid(id).value='')}
-function renderJournal(){let tb=document.querySelector('#journalTable tbody');tb.innerHTML='';journal.forEach((j,i)=>{tb.insertAdjacentHTML('beforeend',`<tr><td>${j.d}</td><td class="ticker ltr">${j.t}</td><td>${j.pnl}</td><td>${j.r}</td><td>${j.f}</td><td>${j.n}</td><td><button class="bad" onclick="journal.splice(${i},1);renderJournal();saveJournal()">מחק</button></td></tr>`)});}
-function saveJournal(){localStorage.setItem(DKEY+'_journal',JSON.stringify(journal))}
-function loadJournal(){journal=JSON.parse(localStorage.getItem(DKEY+'_journal')||'[]');renderJournal()}
-function clearJournal(){if(confirm('לנקות יומן?')){journal=[];renderJournal();saveJournal()}}
-function exportCSV(){let rows=[['date','ticker','pnl','r','discipline','note'],...journal.map(j=>[j.d,j.t,j.pnl,j.r,j.f,j.n])];let csv=rows.map(r=>r.map(x=>'"'+String(x??'').replaceAll('"','""')+'"').join(',')).join('\n');let blob=new Blob([csv],{type:'text/csv;charset=utf-8'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='trade_journal.csv';a.click();URL.revokeObjectURL(a.href)}
-function saveAll(){saveWatchlist();savePlans();saveJournal();saveCalc();saveLive();saveMarket();calcChecklist();toast('הכל נשמר בדפדפן')}
-function toast(msg){let d=document.createElement('div');d.textContent=msg;d.style.cssText='position:fixed;right:20px;bottom:75px;background:#6dd3ff;color:#06101d;padding:10px 14px;border-radius:12px;font-weight:900;z-index:99';document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}
-function v(id){return gid(id).value}function gid(id){return document.getElementById(id)}
-function boot(){setDate();watch=JSON.parse(localStorage.getItem(DKEY+'_watch')||'null')||JSON.parse(JSON.stringify(defaultWatch));renderWatch();loadMarket();loadChecks();loadCalc();loadPlans();loadLive();loadJournal();let q=localStorage.getItem(DKEY+'_quick');if(q)gid('quickBox').textContent=q;['m_qqq','m_soxx','m_sector','m_open','m_vix'].forEach(id=>gid(id).addEventListener('change',calcMarket));document.querySelectorAll('#checklist input').forEach(b=>b.addEventListener('change',calcChecklist));['cap','riskPct','entry','stop'].forEach(id=>gid(id).addEventListener('input',calcSize));['liveEntry','liveStop','livePrice','liveQty'].forEach(id=>gid(id).addEventListener('input',calcLive));}
-boot();
-
-function copyPrompt(id){
-  const el=document.getElementById(id);
-  if(!el) return;
-  const text=el.value || el.textContent || '';
-  if(navigator.clipboard && window.isSecureContext){
-    navigator.clipboard.writeText(text).then(()=>{ if(typeof toast==='function') toast('Prompt copied'); }).catch(()=>fallbackCopy(el));
-  } else {
-    fallbackCopy(el);
-  }
-}
-function fallbackCopy(el){
-  el.focus(); el.select();
-  try{document.execCommand('copy'); if(typeof toast==='function') toast('Prompt copied'); if(typeof flash==='function') flash('Prompt copied');}
-  catch(e){alert('Copy failed. Select the text manually.');}
-}
-
-</script>
+  <script>
+    const steps = [
+      ['10:00','Morning scan'],['11:15','Early premarket'],['15:45','Final scan'],['Gate','Market permission'],['Setup','Ticker + pattern'],['Plan','Risk + levels'],['Live','Position management'],['Journal','Review'],['Data','Yahoo bridge']
+    ];
+    const prompts = {
+      promptMorning:`Act as a professional Wall Street momentum scanner. It is 10:00 AM Israel time, before meaningful US premarket trading. Do not create a final trading list yet. Your goal is to build an initial candidate list for today’s session.\n\nSearch current sources and identify: overnight corporate news, after-hours movers from the prior session, earnings, guidance changes, analyst upgrades/downgrades, M&A, FDA/regulatory events, AI, semiconductors, cybersecurity, quantum, space, nuclear/power, crypto, fintech, and potential short-squeeze names.\n\nFor each candidate provide: ticker, company name, theme/sector, catalyst, catalyst strength, whether it can become a volatile momentum candidate, what must be checked again once premarket volume develops, and an initial 1-10 watchlist score.\n\nImportant: separate “candidate for monitoring” from “candidate for actual trading”. Do not rely on memory. Use current sources and cite them.`,
+      promptEarly:`Update the morning candidate list using early US premarket data. Identify which names are actually moving, which have real premarket volume, which are only moving on thin prints, and which sectors are attracting money.\n\nSplit the list into three groups: 1) strong candidates for today’s trading session, 2) monitor only, 3) remove from the list.\n\nFor the stronger candidates provide preliminary key levels, risk level, setup type, and updated 1-10 momentum score. Use current data and cite sources.`,
+      promptFinal:`Run a final professional US premarket scan for today’s session. I am looking for highly volatile momentum stocks suitable for active day trading, not long-term investing.\n\nCheck in real time: QQQ, SPY, IWM, SOXX/SMH, IGV, CIBR, VIX, sector leadership, unusual premarket volume, fresh news, short-squeeze candidates, AI, semiconductors, cybersecurity, quantum, space, crypto, nuclear/power, fintech, and software.\n\nDeliver: Top 10 trading candidates, Top 5 aggressive momentum names, Top 3 cleanest sector+catalyst names, Top 3 high-risk/high-volatility names, names attracting attention but not worth chasing, key levels for each ticker, preferred setup type: Breakout, Pullback to VWAP, Higher Low, or Short Squeeze, and an opening 15-minute action plan.\n\nSeparate facts, data, and your assessment. Do not rely on memory. Use current sources and citations.`
+    };
+    let currentStep = Number(localStorage.getItem('mp_currentStep')||0);
+    let completed = JSON.parse(localStorage.getItem('mp_completed')||'[]');
+    let journal = JSON.parse(localStorage.getItem('mp_journal')||'[]');
+    const nav = document.getElementById('stepNav');
+    function save(id){ const el=document.getElementById(id); if(!el) return; localStorage.setItem('mp_'+id, el.value); }
+    function load(id){ const el=document.getElementById(id); if(!el) return; const v=localStorage.getItem('mp_'+id); if(v!==null) el.value=v; }
+    function renderNav(){
+      nav.innerHTML='';
+      steps.forEach((s,i)=>{ const b=document.createElement('button'); b.className='step-btn '+(i===currentStep?'active ':'')+(completed.includes(i)?'done':''); b.innerHTML=`<span class="num">${completed.includes(i)?'✓':i+1}</span><span><div class="step-title">${s[0]}</div><div class="step-meta">${s[1]}</div></span>`; b.onclick=()=>go(i); nav.appendChild(b); });
+      const count=completed.length; document.getElementById('progressText').textContent=count+'/8'; document.getElementById('progressBar').style.width=Math.min(100,count/8*100)+'%';
+    }
+    function go(i){ currentStep=i; localStorage.setItem('mp_currentStep',i); document.querySelectorAll('.section').forEach(sec=>sec.classList.toggle('active',Number(sec.dataset.step)===i)); renderNav(); }
+    function updateGate(){
+      const score=['qqqState','soxxState','sectorState','vixState'].reduce((a,id)=>a+Number(document.getElementById(id).value||0),0);
+      const box=document.getElementById('gateResult'); box.className='gate '+(score>=3?'good':score<=-1?'bad':'warn');
+      if(score>=3) box.innerHTML='<div class="gate-title">Gate: ירוק, מותר להיות אגרסיבי בזהירות</div><div class="gate-note">השוק, הסקטור והתנודתיות תומכים. עדיין לא רודפים אחרי גאפ פתיחה.</div>';
+      else if(score<=-1) box.innerHTML='<div class="gate-title">Gate: אדום, להקטין אגרסיביות</div><div class="gate-note">לא נכנסים בכוח. רק setup נקי מאוד, או ממתינים.</div>';
+      else box.innerHTML='<div class="gate-title">Gate: צהוב, גודל קטן בלבד</div><div class="gate-note">יש תמיכה חלקית בלבד. עדיף לחכות לאישור VWAP.</div>';
+    }
+    function calcRisk(){
+      const cap=Number(capital.value||0), rp=Number(riskPct.value||0), en=Number(entry.value||0), st=Number(stop.value||0); const risk=cap*rp/100; const per=Math.abs(en-st); const sh=per>0?Math.floor(risk/per):0;
+      riskMoney.textContent='₪'+Math.round(risk).toLocaleString(); sharesOut.textContent=sh.toLocaleString(); posValue.textContent='$'+Math.round(sh*en).toLocaleString(); stopDist.textContent=(en>0?Math.abs((en-st)/en*100).toFixed(2):'0')+'%'; calcLive();
+    }
+    function calcLive(){
+      const en=Number(entry.value||0), st=Number(stop.value||0), cp=Number(currentPrice.value||0), sh=Number(sharesOut.textContent.replace(/,/g,'')||0); const riskPer=Math.abs(en-st); const r=(riskPer>0&&cp>0)?((cp-en)/riskPer):0; rNow.textContent=r.toFixed(2)+'R'; plNow.textContent='$'+Math.round((cp-en)*sh).toLocaleString();
+      const box=document.getElementById('liveDecision'), v=liveVwap.value, ps=priceStructure.value;
+      let cls='warn', title='Decision: המתן', note='אין יתרון ברור.';
+      if(v==='מתחת VWAP'||ps==='שיאים יורדים'){cls='bad';title='Decision: יציאה / הקטנת סיכון';note='שבירה מתחת VWAP או מבנה יורד, לא נותנים לירוק להפוך לאדום.'}
+      else if(r>=2 && v==='מעל VWAP'){cls='good';title='Decision: להחזיק חלק, לקחת רווח חלקי';note='יש יתרון. מורידים חלק ומשאירים רק כל עוד המניה מעל VWAP.'}
+      else if(r>=1){cls='warn';title='Decision: להעביר סטופ לאזור כניסה';note='הטרייד בכיוון, אבל עדיין לא חופשי מסיכון.'}
+      box.className='gate '+cls; box.innerHTML=`<div class="gate-title">${title}</div><div class="gate-note">${note}</div>`;
+    }
+    function renderJournal(){
+      const box=document.getElementById('journalList'); if(!journal.length){box.innerHTML='<div class="journal-empty">עדיין אין עסקאות ביומן.</div>'; return;}
+      box.innerHTML='<table class="table"><thead><tr><th>תאריך</th><th>סימבול</th><th>תבנית</th><th>כניסה</th><th>יציאה</th><th>תוצאה</th><th>משמעת</th><th>הערה</th></tr></thead><tbody>'+journal.map(j=>`<tr><td>${j.date}</td><td class="mono">${j.ticker}</td><td>${j.setup}</td><td>${j.entry}</td><td>${j.exit}</td><td><span class="tag ${j.result==='Win'?'good':j.result==='Loss'?'bad':'warn'}">${j.result}</span></td><td>${j.discipline}</td><td>${j.note||''}</td></tr>`).join('')+'</tbody></table>';
+    }
+    async function refreshQuotes(){
+      const url=bridgeUrl.value.trim().replace(/\/$/,''); const syms=quoteSymbols.value.replace(/\s/g,''); if(!url){quoteStatus.textContent='חסר Worker URL'; return;} quoteStatus.textContent='טוען...';
+      try{ const r=await fetch(url+'?symbols='+encodeURIComponent(syms)); if(!r.ok) throw new Error('HTTP '+r.status); const data=await r.json(); const arr=data.quoteResponse?.result||data.result||[];
+        quotesBox.innerHTML='<table class="table"><thead><tr><th>Symbol</th><th>Price</th><th>Change %</th><th>Volume</th><th>Market</th></tr></thead><tbody>'+arr.map(q=>`<tr><td class="mono">${q.symbol}</td><td>${q.regularMarketPrice??''}</td><td>${q.regularMarketChangePercent?.toFixed? q.regularMarketChangePercent.toFixed(2):''}%</td><td>${q.regularMarketVolume?.toLocaleString? q.regularMarketVolume.toLocaleString():''}</td><td>${q.marketState||''}</td></tr>`).join('')+'</tbody></table>'; quoteStatus.textContent='עודכן'; save('bridgeUrl'); save('quoteSymbols');
+      }catch(e){quoteStatus.textContent='שגיאה בגשר הנתונים'; quotesBox.innerHTML='<div class="journal-empty">לא הצלחתי למשוך נתונים. בדוק Worker URL ו־CORS.</div>';}
+    }
+    function exportCSV(){
+      const rows=[['date','ticker','setup','entry','exit','result','discipline','note'],...journal.map(j=>[j.date,j.ticker,j.setup,j.entry,j.exit,j.result,j.discipline,(j.note||'').replace(/\n/g,' ')])]; const csv=rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n');
+      const blob=new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='momentum-trade-journal.csv'; a.click(); URL.revokeObjectURL(a.href);
+    }
+    document.getElementById('todayLabel').textContent=new Date().toLocaleDateString('he-IL',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'});
+    Object.entries(prompts).forEach(([id,val])=>document.getElementById(id).value=val);
+    ['morningThemes','morningCandidates','earlyKeep','earlyRemove','finalTop','primaryTicker','setupTicker','setupType','setupTrigger','setupRisk','setupNote','capital','riskPct','entry','stop','target1','target2','target3','currentPrice','liveVwap','priceStructure','journalResult','exitPrice','discipline','journalNote','bridgeUrl','quoteSymbols','qqqState','soxxState','sectorState','vixState'].forEach(id=>{load(id); const el=document.getElementById(id); if(el) el.addEventListener('input',()=>{save(id); calcRisk(); updateGate(); calcLive();}); if(el) el.addEventListener('change',()=>{save(id); calcRisk(); updateGate(); calcLive();});});
+    document.querySelectorAll('[data-copy]').forEach(btn=>btn.onclick=async()=>{const id=btn.dataset.copy; await navigator.clipboard.writeText(document.getElementById(id).value); const ok=btn.parentElement.querySelector('.copy-ok'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),1200);});
+    document.getElementById('completeStep').onclick=()=>{ if(currentStep<8 && !completed.includes(currentStep)) completed.push(currentStep); localStorage.setItem('mp_completed',JSON.stringify(completed)); if(currentStep<8) go(currentStep+1); else renderNav(); };
+    document.getElementById('prevStep').onclick=()=>go(Math.max(0,currentStep-1));
+    document.getElementById('resetDay').onclick=()=>{ if(confirm('לאפס את התקדמות היום? היומן יישמר.')){completed=[]; currentStep=0; localStorage.setItem('mp_completed','[]'); go(0);} };
+    document.getElementById('saveJournal').onclick=()=>{journal.unshift({date:new Date().toLocaleString('he-IL'),ticker:setupTicker.value||primaryTicker.value,setup:setupType.value,entry:entry.value,exit:exitPrice.value,result:journalResult.value,discipline:discipline.value,note:journalNote.value}); localStorage.setItem('mp_journal',JSON.stringify(journal)); renderJournal();};
+    document.getElementById('clearJournal').onclick=()=>{if(confirm('לנקות את היומן?')){journal=[]; localStorage.setItem('mp_journal','[]'); renderJournal();}};
+    document.getElementById('exportState').onclick=exportCSV; document.getElementById('refreshQuotes').onclick=refreshQuotes;
+    renderNav(); go(currentStep); updateGate(); calcRisk(); renderJournal();
+  </script>
 </body>
 </html>
