@@ -1,0 +1,5 @@
+Repository name:
+momentum-trading-control-desk
+
+Description:
+Professional step-by-step momentum trading desk with light/dark mode, AI scan prompts, Yahoo Finance bridge, risk calculator, live position management and journal.

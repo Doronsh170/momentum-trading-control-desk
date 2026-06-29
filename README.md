@@ -1,55 +1,50 @@
-# Momentum Trading Control Desk
+# Doron Momentum Control Desk
 
-A free, static HTML control desk for active momentum trading preparation and execution.
+Professional step-by-step momentum trading control desk for active US market preparation and execution.
 
-The tool is designed for traders who want a structured workflow before and during the US trading session: market context, watchlist focus, premarket scan prompts, trade planning, position sizing, risk control, live trade management, and a trading journal.
+## What is included
 
-## Live site structure
+- Cleaner desktop workflow
+- Light mode and dark mode toggle
+- Built-in Yahoo Finance bridge URL
+- Compact quote tape
+- Step-by-step workflow: 10:00 scan, 11:15 update, 15:45 final scan, Market Gate, Setup, Plan, Live, Journal, Data
+- English AI scan prompts with copy buttons
+- Market Gate for QQQ, SOXX/SMH, sector and VIX
+- Position sizing and stop-distance calculator
+- Live position management by VWAP, price structure and R
+- Local browser storage
+- CSV export for journal
 
-- `index.html`, desktop version
-- `mobile.html`, mobile version
+## GitHub Pages
 
-## Main features
+Upload these files to the repository root:
 
-- Morning candidate scan prompt, 10:00 Israel time
-- Early premarket update prompt, around 11:15 Israel time
-- Final premarket scan prompt, around 15:45 Israel time
-- Momentum watchlist workflow
-- Market condition checklist
-- Trade plan builder
-- Position size calculator
-- Stop and target planning
-- Live position control
-- Trade journal with CSV export
-- Local browser storage, no paid API, no server, no external dependency
+```text
+index.html
+mobile.html
+README.md
+yahoo-worker.js
+.nojekyll
+REPO_INFO.txt
+```
 
-## Intended workflow
+The site will open from:
 
-1. Open the desk in the morning and copy the 10:00 prompt.
-2. Use the output to build a candidate list, not a final trade list.
-3. Recheck the list during early premarket.
-4. Run the final scan before the US market opens.
-5. Trade only after market confirmation, preferably after VWAP and opening range behavior are clear.
-6. Log each trade and review execution quality.
+```text
+https://doronsh170.github.io/momentum-trading-control-desk/
+```
 
-## GitHub Pages deployment
+## Yahoo Finance bridge
 
-1. Create a new GitHub repository.
-2. Upload `index.html`, `mobile.html`, `.nojekyll`, and this `README.md`.
-3. Go to Settings, Pages.
-4. Under Build and deployment, choose Deploy from a branch.
-5. Select the `main` branch and root folder.
-6. Save.
-7. After GitHub publishes the site, open the Pages URL.
+The app includes this Worker URL by default:
 
-## Repository name suggestion
+```text
+https://momentum-yahoo-bridge.sh6doron.workers.dev
+```
 
-`momentum-trading-control-desk`
-
-## Repository description suggestion
-
-`Free static HTML trading control desk for momentum day trading, with AI scan prompts, watchlist workflow, risk calculator, trade plan builder, and trade journal.`
+No API key is used. The Worker is public and contains no secret.
 
 ## Disclaimer
 
-This tool is for personal workflow, education, and trade organization only. It does not provide investment advice, portfolio management, or a recommendation to buy or sell securities. Trading volatile momentum stocks involves substantial risk, including rapid losses.
+This is a personal trading workflow tool. It is not investment advice, not a recommendation to buy or sell securities, and not a substitute for a licensed trading platform or broker data.
