@@ -157,10 +157,10 @@
       </section>
 
       <section class="section" data-step="8">
-        <div class="hero"><h2>גשר נתונים ל־Yahoo Finance</h2><p>GitHub Pages לא מריץ backend. כדי למשוך נתונים מ־Yahoo בצורה יציבה יחסית צריך Worker חיצוני, למשל Cloudflare Worker. מדביקים את כתובת ה־Worker כאן ומרעננים ציטוטים.</p></div>
+        <div class="hero"><h2>גשר נתונים ל־Yahoo Finance</h2><p>GitHub Pages לא מריץ backend. הגשר ל־Yahoo Finance כבר מובנה בכלי. אפשר לרענן ציטוטים מיד. אם בעתיד מחליפים Worker, אפשר לעדכן את הכתובת כאן.</p></div>
         <div class="grid">
-          <div class="card col-6"><label class="label">Yahoo Bridge URL</label><input class="input" id="bridgeUrl" placeholder="https://your-worker.workers.dev" /><label class="label" style="margin-top:12px">Symbols</label><input class="input" id="quoteSymbols" value="QQQ,SOXX,SMH,CIBR,IGV,ASTS,RKLB,PANW,WDC,NBIS,IONQ,WEN" /><div class="row" style="margin-top:10px"><button class="btn primary" id="refreshQuotes">Refresh quotes</button><span class="muted" id="quoteStatus"></span></div></div>
-          <div class="card col-6"><h3>Quotes</h3><div id="quotesBox" class="table-wrap"><div class="journal-empty">עדיין אין נתונים. הגדר Worker ולחץ Refresh.</div></div></div>
+          <div class="card col-6"><label class="label">Yahoo Bridge URL</label><input class="input" id="bridgeUrl" value="https://momentum-yahoo-bridge.sh6doron.workers.dev" placeholder="https://your-worker.workers.dev" /><label class="label" style="margin-top:12px">Symbols</label><input class="input" id="quoteSymbols" value="QQQ,SOXX,SMH,CIBR,IGV,ASTS,RKLB,PANW,WDC,NBIS,IONQ,WEN" /><div class="row" style="margin-top:10px"><button class="btn primary" id="refreshQuotes">Refresh quotes</button><span class="muted" id="quoteStatus"></span></div></div>
+          <div class="card col-6"><h3>Quotes</h3><div id="quotesBox" class="table-wrap"><div class="journal-empty">עדיין אין נתונים. לחץ Refresh quotes.</div></div></div>
         </div>
       </section>
 
@@ -172,6 +172,7 @@
   </div>
 
   <script>
+    const DEFAULT_BRIDGE_URL = 'https://momentum-yahoo-bridge.sh6doron.workers.dev';
     const steps = [
       ['10:00','Morning scan'],['11:15','Early premarket'],['15:45','Final scan'],['Gate','Market permission'],['Setup','Ticker + pattern'],['Plan','Risk + levels'],['Live','Position management'],['Journal','Review'],['Data','Yahoo bridge']
     ];
@@ -229,6 +230,7 @@
     document.getElementById('todayLabel').textContent=new Date().toLocaleDateString('he-IL',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'});
     Object.entries(prompts).forEach(([id,val])=>document.getElementById(id).value=val);
     ['morningThemes','morningCandidates','earlyKeep','earlyRemove','finalTop','primaryTicker','setupTicker','setupType','setupTrigger','setupRisk','setupNote','capital','riskPct','entry','stop','target1','target2','target3','currentPrice','liveVwap','priceStructure','journalResult','exitPrice','discipline','journalNote','bridgeUrl','quoteSymbols','qqqState','soxxState','sectorState','vixState'].forEach(id=>{load(id); const el=document.getElementById(id); if(el) el.addEventListener('input',()=>{save(id); calcRisk(); updateGate(); calcLive();}); if(el) el.addEventListener('change',()=>{save(id); calcRisk(); updateGate(); calcLive();});});
+    if (bridgeUrl && !bridgeUrl.value.trim()) { bridgeUrl.value = DEFAULT_BRIDGE_URL; save('bridgeUrl'); }
     document.querySelectorAll('[data-copy]').forEach(btn=>btn.onclick=async()=>{const id=btn.dataset.copy; await navigator.clipboard.writeText(document.getElementById(id).value); const ok=btn.parentElement.querySelector('.copy-ok'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),1200);});
     document.getElementById('completeStep').onclick=()=>{ if(currentStep<8 && !completed.includes(currentStep)) completed.push(currentStep); localStorage.setItem('mp_completed',JSON.stringify(completed)); if(currentStep<8) go(currentStep+1); else renderNav(); };
     document.getElementById('prevStep').onclick=()=>go(Math.max(0,currentStep-1));
