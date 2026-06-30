@@ -48,3 +48,8 @@ No API key is used. The Worker is public and contains no secret.
 ## Disclaimer
 
 This is a personal trading workflow tool. It is not investment advice, not a recommendation to buy or sell securities, and not a substitute for a licensed trading platform or broker data.
+
+
+## Concise Hebrew prompt output
+
+The scan prompts are configured to request short, focused Hebrew answers, without long reports or large markdown tables.

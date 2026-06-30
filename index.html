@@ -365,9 +365,74 @@ const steps = [
   {name:'Data',desc:'Yahoo bridge',title:'שלב 9: נתונים',subtitle:'רענון נתוני Yahoo דרך Cloudflare Worker. הכתובת כבר מובנית.',badge:'Data'}
 ];
 const prompts = {
-  promptMorning:`Act as a professional Wall Street momentum scanner and trading strategist.\n\nIt is around 10:00 AM Israel time, before meaningful US premarket trading has developed. Do not build a final buy list yet. The goal is to prepare an initial candidate list for the upcoming US trading session.\n\nSearch current sources and identify: significant overnight US stock news, stocks that moved strongly after hours, earnings, guidance changes, analyst upgrades or downgrades, catalysts in AI, semiconductors, cybersecurity, quantum, space, nuclear/power, crypto, fintech and short-squeeze candidates.\n\nFor each candidate provide: ticker, company name, theme or sector, catalyst, catalyst strength, whether it is suitable for volatile momentum trading, what must be checked again in premarket, and a preliminary 1 to 10 momentum score.\n\nImportant: separate \"candidate to monitor\" from \"candidate to trade\". Do not say a stock is ready for trading if there is no meaningful premarket data yet. Use current sources and citations.`,
-  promptEarly:`Update the morning candidate list using early US premarket data.\n\nCheck which names are actually moving, which have real premarket volume, which are moving only on thin prints, and which sectors are attracting money.\n\nSplit the list into three groups: strong candidates for today's trading session, monitor only, and remove from the list.\n\nFor the stronger candidates provide preliminary key levels, risk level, setup type, and updated 1 to 10 momentum score. Use current data and cite sources.`,
-  promptFinal:`Run a final professional US premarket scan for today's session. I am looking for highly volatile momentum stocks suitable for active day trading, not long-term investing.\n\nCheck in real time: QQQ, SPY, IWM, SOXX or SMH, IGV, CIBR, VIX, sector leadership, unusual premarket volume, fresh news, short-squeeze candidates, AI, semiconductors, cybersecurity, quantum, space, crypto, nuclear/power, fintech, and software.\n\nDeliver: Top 10 trading candidates, Top 5 aggressive momentum names, Top 3 cleanest sector plus catalyst names, Top 3 high-risk/high-volatility names, names attracting attention but not worth chasing, key levels for each ticker, preferred setup type: Breakout, Pullback to VWAP, Higher Low, Opening Range Break, or Short Squeeze, and an opening 15-minute action plan.\n\nSeparate facts, data, and your assessment. Do not rely on memory. Use current sources and citations.`
+  promptMorning:`Act as a professional Wall Street momentum scanner and trading strategist.
+
+It is around 10:00 AM Israel time, before meaningful US premarket trading has developed. Do not build a final buy list yet. The goal is to prepare only an initial candidate list for the upcoming US trading session.
+
+Search current sources and identify significant overnight US stock news, after-hours movers, earnings, guidance changes, analyst upgrades or downgrades, and catalysts in AI, semiconductors, cybersecurity, quantum, space, nuclear/power, crypto, fintech, defense/drones, and short-squeeze candidates.
+
+Output rules, very important:
+- Answer in Hebrew only.
+- Keep the answer short, focused, and practical.
+- Do not write a long report.
+- Do not use a large markdown table.
+- Do not list 20-30 stocks unless there is a truly exceptional reason.
+- Provide up to 10-12 candidates maximum.
+- Each stock should be one short line only: Hebrew company name if known, ticker, and one sentence explaining why it is on watch.
+- Separate clearly between candidate to monitor and candidate to trade.
+- At this early 10:00 stage, assume these are monitor candidates only unless real premarket data already exists.
+- End with: "First names to re-check in premarket" and list only 5-8 tickers.
+- Use current sources and citations, but keep citations compact.
+
+Required format:
+1. One-line market context.
+2. 8-12 candidate bullets maximum.
+3. First names to re-check in premarket: 5-8 tickers.
+4. One short bottom line.
+
+Do not give me a broad educational explanation. I need a concise working list for momentum trading preparation.`,
+  promptEarly:`Update the morning candidate list using early US premarket data.
+
+Check which names are actually moving, which have real premarket volume, which are moving only on thin prints, and which sectors are attracting money.
+
+Output rules, very important:
+- Answer in Hebrew only.
+- Keep the answer short, focused, and practical.
+- Do not write a long report.
+- Do not use a large markdown table.
+- Use bullets only.
+- Keep only the names that matter now.
+
+Split the list into three short groups:
+1. Stronger candidates for today's trading session.
+2. Monitor only.
+3. Remove from list.
+
+For each remaining candidate give only: ticker, one-sentence reason, key level if available, risk level, and updated 1 to 10 momentum score.
+
+End with the top 5 tickers to focus on next. Use current data and cite sources compactly.`,
+  promptFinal:`Run a final professional US premarket scan for today's session. I am looking for highly volatile momentum stocks suitable for active day trading, not long-term investing.
+
+Check in real time: QQQ, SPY, IWM, SOXX or SMH, IGV, CIBR, VIX, sector leadership, unusual premarket volume, fresh news, short-squeeze candidates, AI, semiconductors, cybersecurity, quantum, space, crypto, nuclear/power, fintech, defense/drones, and software.
+
+Output rules, very important:
+- Answer in Hebrew only.
+- Keep it short, sharp, and actionable.
+- Do not write a long report.
+- Do not use a large markdown table.
+- Give only the best candidates, not every interesting stock.
+- Maximum 10 names total.
+- For each name use one short line: ticker, catalyst, setup type, key level, risk.
+
+Required format:
+1. Market mode: Risk-On / Mixed / Risk-Off, one line.
+2. Top 5 aggressive momentum candidates.
+3. Top 3 cleanest names by sector plus catalyst.
+4. 2 high-risk squeeze/speculation names, only if relevant.
+5. Avoid / do not chase, maximum 3 names.
+6. Opening plan for the first 15 minutes, maximum 5 bullets.
+
+Separate facts, data, and your assessment. Do not rely on memory. Use current sources and citations, but keep citations compact. I want a focused trading worklist, not a broad market review.`
 };
 let currentStep = Number(localStorage.getItem('dm_currentStep') || 0);
 let completed = JSON.parse(localStorage.getItem('dm_completed') || '[]');
